@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Unbounded&display=swap");
+
+:root {
+  --darkgreen: #041f1e;
+  --honeydew: #e0efda;
+  --magentahaze: #8e5572;
+}
+
+body {
+  color: white;
+  font-family: "Unbounded", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  min-height: 100vh;
+  max-width: 100%;
+}
+
+header {
+  background-color: var(--darkgreen);
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+header a {
+  text-decoration: none;
+  color: white;
+}
+
+.quizHeading ul li {
+  list-style: none;
+}
+
+.quizContent {
+  background-color: var(--magentahaze);
+  padding: 10%;
+}
