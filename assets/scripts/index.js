@@ -1,9 +1,32 @@
 var questionContentEL = document.querySelector(".question-Container");
+var counter = document.querySelector("#timerInterval").textContent;
 let currentQuestionIndex = 0;
 let data;
 
 console.log(questionContentEL);
+console.log(counter);
 
+function startQuiz() {
+  questionContentEL.innerHTML = "";
+  const startButton = document.createElement("button");
+  startButton.textContent = "Start";
+  startButton.setAttribute("style", "display:block; margin-bottom:10px;");
+  startButton.addEventListener("click", () => {
+    loadQuestions();
+    setInterval(testTimer, 1000);
+  });
+
+  const startText = document.createElement("div");
+  startText.textContent = "Click button to start";
+  questionContentEL.appendChild(startText);
+  questionContentEL.appendChild(startButton);
+}
+
+/**
+ * Loads questions from a JSON file and displays the first question.
+ *
+ * @return {void} This function does not return a value.
+ */
 function loadQuestions() {
   fetch("assets/json/questions.json")
     .then((response) => response.json())
@@ -13,6 +36,20 @@ function loadQuestions() {
     })
     .catch((error) => console.error(error));
 }
+
+const testTimer = function () {
+  counter--;
+  if (counter === 0) {
+    endQuiz();
+  }
+};
+
+/**
+ * Displays a question with its choices and handles the user's choice selection.
+ *
+ * @param {Object} question - The question object containing title and choices.
+ * @return {void} This function does not return anything.
+ */
 
 function showQuestion(question) {
   questionContentEL.innerHTML = "";
@@ -53,13 +90,27 @@ function showQuestion(question) {
     .catch((error) => console.error(error));
 } */
 
+/**
+ * Handles the user's choice in a quiz question and logs the result.
+ *
+ * @param {Object} question - The question object containing the title, choices, and correct answer index.
+ * @param {number} choiceIndex - The index of the user's chosen answer.
+ */
 function handleChoice(question, choiceIndex) {
   console.log(`Question: ${question.title}, User choice: ${question.choices[choiceIndex]}`);
   const correctIndex = question.correctAnswer;
   if (correctIndex === choiceIndex) {
     console.log("correctAnswer");
+    const correctMsg = document.createElement("span");
+    correctMsg.setAttribute("style", "background-color:green; color:white;");
+    correctMsg.textContent = "Correct!";
+    document.querySelector(".quizContent").appendChild(correctMsg);
   } else {
     console.log("incorrectAnswer");
+    const incorrectAns = document.createElement("span");
+    incorrectAns.setAttribute("style", "background-color:red; color:white;");
+    incorrectAns.textContent = "Incorrect!";
+    document.querySelector(".quizContent").appendChild(incorrectAns);
   }
   const nextQuestionIndex = currentQuestionIndex + 1;
   if (nextQuestionIndex < data.length) {
@@ -70,6 +121,11 @@ function handleChoice(question, choiceIndex) {
   }
 }
 
+/**
+ * Ends the quiz by clearing the question content and displaying "Game Over" message.
+ *
+ * @return {undefined} This function does not return anything.
+ */
 function endQuiz() {
   console.log("Quiz Ended");
   questionContentEL.innerHTML = "";
@@ -78,4 +134,4 @@ function endQuiz() {
   questionContentEL.appendChild(questionDiv);
 }
 
-loadQuestions();
+startQuiz();
