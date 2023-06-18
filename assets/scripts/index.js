@@ -1,7 +1,9 @@
 var questionContentEL = document.querySelector(".question-Container");
-var counter = document.querySelector("#timerInterval").textContent;
+var quizTimer = document.querySelector("#timerInterval");
+var counter = quizTimer.textContent;
 let currentQuestionIndex = 0;
 let data;
+var timerInterval;
 
 console.log(questionContentEL);
 console.log(counter);
@@ -13,6 +15,7 @@ function startQuiz() {
   startButton.setAttribute("style", "display:block; margin-bottom:10px;");
   startButton.addEventListener("click", () => {
     loadQuestions();
+    testTimer();
     setInterval(testTimer, 1000);
   });
 
@@ -37,12 +40,18 @@ function loadQuestions() {
     .catch((error) => console.error(error));
 }
 
-const testTimer = function () {
-  counter--;
-  if (counter === 0) {
-    endQuiz();
-  }
-};
+function testTimer() {
+  timerInterval = setTimeout(() => {
+    counter--;
+
+    if (counter < 0) {
+      clearInterval(timerInterval);
+      endQuiz();
+    } else {
+      quizTimer.textContent = counter;
+    }
+  }, 1000);
+}
 
 /**
  * Displays a question with its choices and handles the user's choice selection.
@@ -111,6 +120,8 @@ function handleChoice(question, choiceIndex) {
     incorrectAns.setAttribute("style", "background-color:red; color:white;");
     incorrectAns.textContent = "Incorrect!";
     document.querySelector(".quizContent").appendChild(incorrectAns);
+    counter -= 10;
+    quizTimer.textContent = counter;
   }
   const nextQuestionIndex = currentQuestionIndex + 1;
   if (nextQuestionIndex < data.length) {
@@ -129,6 +140,7 @@ function handleChoice(question, choiceIndex) {
 function endQuiz() {
   console.log("Quiz Ended");
   questionContentEL.innerHTML = "";
+  clearInterval(timerInterval);
   const questionDiv = document.createElement("div");
   questionDiv.textContent = "Game Over";
   questionContentEL.appendChild(questionDiv);
