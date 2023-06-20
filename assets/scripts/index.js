@@ -4,6 +4,7 @@ var counter = quizTimer.textContent;
 let currentQuestionIndex = 0;
 let data;
 var timerInterval;
+let highScore = 0;
 
 console.log(questionContentEL);
 console.log(counter);
@@ -125,6 +126,8 @@ function handleChoice(question, choiceIndex) {
     const correctMsg = document.createElement("span");
     correctMsg.setAttribute("style", "background-color:green; color:white;");
     correctMsg.textContent = "Correct!";
+    highScore + 1;
+    console.log(highScore);
     document.querySelector(".quizContent").appendChild(correctMsg);
     removeElAfterDelay(correctMsg, 500);
   } else {
@@ -132,6 +135,8 @@ function handleChoice(question, choiceIndex) {
     const incorrectAns = document.createElement("span");
     incorrectAns.setAttribute("style", "background-color:red; color:white;");
     incorrectAns.textContent = "Incorrect!";
+    highScore - 1;
+    console.log(highScore);
     document.querySelector(".quizContent").appendChild(incorrectAns);
     counter -= 10;
     quizTimer.textContent = counter;
@@ -146,6 +151,28 @@ function handleChoice(question, choiceIndex) {
   }
 }
 
+function saveScore(score) {
+  const nameInput = document.createElement("input");
+  nameInput.setAttribute("type", "text");
+  nameInput.setAttribute("placeholder", "Enter your name");
+  const saveBtn = document.createElement("button");
+  saveBtn.textContent = "Save";
+  saveBtn.addEventListener("click", () => {
+    const name = nameInput.value;
+    let scores = JSON.parse(localStorage.getItem("highScore")) || [];
+    scores.push({ name, score: score });
+    localStorage.setItem("highScore", JSON.stringify(scores));
+  });
+
+  const scoreDiv = document.createElement("div");
+  scoreDiv.setAttribute("style", "display:block;");
+  scoreDiv.textContent = `Score: ${score}`;
+  scoreDiv.appendChild(nameInput);
+  scoreDiv.appendChild(saveBtn);
+  questionContentEL.innerHTML = "";
+  questionContentEL.appendChild(scoreDiv);
+}
+
 /**
  * Ends the quiz by clearing the question content and displaying "Game Over" message.
  *
@@ -156,8 +183,13 @@ function endQuiz() {
   questionContentEL.innerHTML = "";
   clearInterval(timerInterval);
   const questionDiv = document.createElement("div");
+  const showScore = document.createElement("span");
+  showScore.setAttribute("style", "background-color:green; color:white;");
+  showScore.textContent = `Score: ${highScore}`;
   questionDiv.textContent = "Game Over";
   questionContentEL.appendChild(questionDiv);
+  questionContentEL.prepend(showScore);
+  saveScore(highScore);
 }
 
 startQuiz();
