@@ -1,5 +1,6 @@
 var questionContentEL = document.querySelector(".question-Container");
 var quizTimer = document.querySelector("#timerInterval");
+const headerEl = document.querySelector("header");
 var counter = quizTimer.textContent;
 let currentQuestionIndex = 0;
 let data;
@@ -99,7 +100,7 @@ function showQuestion(question) {
 } */
 
 /**
- * Removes the given element after a specified delay.
+ * Removes the alert message (correct or incorrect) after a specified delay.
  *
  * @param {Element} el - The element to remove.
  * @param {number} delay - The delay (in milliseconds) before removing the element.
@@ -147,6 +148,14 @@ function handleChoice(question, choiceIndex) {
   }
 }
 
+/**
+ * Creates an input field to enter a name, a save button that saves the
+ * score and name to local storage, and displays the score, input field,
+ * and save button on the page.
+ *
+ * @param {number} score - the score to save
+ */
+
 function saveScore(score) {
   const nameInput = document.createElement("input");
   nameInput.setAttribute("type", "text");
@@ -155,18 +164,66 @@ function saveScore(score) {
   saveBtn.textContent = "Save";
   saveBtn.addEventListener("click", () => {
     const name = nameInput.value;
-    let scores = JSON.parse(localStorage.getItem("highScore")) || [];
-    scores.push({ name, score: score });
-    localStorage.setItem("highScore", JSON.stringify(scores));
+    if (name === "") {
+      //alert("Please input valid name...");
+      const validName = document.createElement("section");
+
+      validName.setAttribute("class", "validationInput");
+      validName.textContent = "Please input valid name...";
+      headerEl.insertAdjacentElement("afterend", validName);
+    } else {
+      let scores = JSON.parse(localStorage.getItem("highScore")) || [];
+      scores.push({ name, score: score });
+      localStorage.setItem("highScore", JSON.stringify(scores));
+      showScore();
+    }
   });
 
   const scoreDiv = document.createElement("div");
+  const scoreText = document.createElement("p");
+  scoreDiv.setAttribute("id", "score-container");
   scoreDiv.setAttribute("style", "display:block;");
-  scoreDiv.textContent = `Score: ${score}`;
+
+  scoreText.textContent = `Score: ${score}`;
+  scoreDiv.appendChild(scoreText);
   scoreDiv.appendChild(nameInput);
   scoreDiv.appendChild(saveBtn);
   questionContentEL.innerHTML = "";
   questionContentEL.appendChild(scoreDiv);
+}
+
+function showScore() {
+  const restartBtn = document.createElement("button");
+  const scoreSection = document.createElement("div");
+  const scoreLog = JSON.parse(localStorage.getItem("highScore"));
+
+  const scoreTable = document.createElement("table");
+  scoreTable.setAttribute("class", "scoreTable");
+  const tableHeader = document.createElement("tr");
+  const highscoreHeaders = ["Name", "Score"];
+  highscoreHeaders.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    tableHeader.appendChild(th);
+  });
+  scoreTable.appendChild(tableHeader);
+
+  scoreLog.forEach((score) => {
+    const tr = document.createElement("tr");
+    scoreTable.appendChild(tr);
+    tr.appendChild(document.createElement("td")).textContent = score.name;
+    tr.appendChild(document.createElement("td")).textContent = score.score;
+  });
+  scoreSection.appendChild(scoreTable);
+  scoreSection.appendChild(restartBtn);
+  restartBtn.textContent = "Restart";
+  restartBtn.addEventListener("click", () => {
+    location.reload();
+  });
+  questionContentEL.innerHTML = "";
+  questionContentEL.appendChild(scoreSection);
+
+  console.log(scoreLog);
 }
 
 /**
@@ -177,14 +234,6 @@ function saveScore(score) {
 function endQuiz() {
   clearInterval(timerInterval);
   console.log("Quiz Ended");
-  questionContentEL.innerHTML = "";
-  const questionDiv = document.createElement("div");
-  const showScore = document.createElement("span");
-  showScore.setAttribute("style", "background-color:green; color:white;");
-  showScore.textContent = `Score: ${highScore}`;
-  questionDiv.textContent = "Game Over";
-  questionContentEL.appendChild(questionDiv);
-  questionContentEL.prepend(showScore);
   saveScore(highScore);
 }
 
