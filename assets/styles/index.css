@@ -39,3 +39,10 @@ header a {
   background-color: var(--magentahaze);
   padding: 10%;
 }
+
+.validationInput {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  color: white;
+}
