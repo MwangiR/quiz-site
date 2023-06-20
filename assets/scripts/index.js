@@ -16,8 +16,16 @@ function startQuiz() {
   startButton.setAttribute("style", "display:block; margin-bottom:10px;");
   startButton.addEventListener("click", () => {
     loadQuestions();
-    testTimer();
-    setInterval(testTimer, 1000);
+    //testTimer();
+    timerInterval = setInterval(() => {
+      counter--;
+      if (counter < 0) {
+        //clearInterval(timerInterval);
+        endQuiz();
+      } else {
+        quizTimer.textContent = counter;
+      }
+    }, 1000);
   });
 
   const startText = document.createElement("div");
@@ -41,19 +49,6 @@ function loadQuestions() {
     .catch((error) => console.error(error));
 }
 
-function testTimer() {
-  timerInterval = setTimeout(() => {
-    counter--;
-
-    if (counter < 0) {
-      clearInterval(timerInterval);
-      endQuiz();
-    } else {
-      quizTimer.textContent = counter;
-    }
-  }, 1000);
-}
-
 /**
  * Displays a question with its choices and handles the user's choice selection.
  *
@@ -72,6 +67,9 @@ function showQuestion(question) {
     choiceButton.textContent = choice;
     choiceButton.setAttribute("style", "display:block; margin-bottom:5px;");
     choiceButton.addEventListener("click", () => {
+      if (index === question.correctAnswer) {
+        highScore++;
+      }
       handleChoice(question, index);
     });
     questionDiv.appendChild(choiceButton);
@@ -126,7 +124,6 @@ function handleChoice(question, choiceIndex) {
     const correctMsg = document.createElement("span");
     correctMsg.setAttribute("style", "background-color:green; color:white;");
     correctMsg.textContent = "Correct!";
-    highScore + 1;
     console.log(highScore);
     document.querySelector(".quizContent").appendChild(correctMsg);
     removeElAfterDelay(correctMsg, 500);
@@ -135,7 +132,6 @@ function handleChoice(question, choiceIndex) {
     const incorrectAns = document.createElement("span");
     incorrectAns.setAttribute("style", "background-color:red; color:white;");
     incorrectAns.textContent = "Incorrect!";
-    highScore - 1;
     console.log(highScore);
     document.querySelector(".quizContent").appendChild(incorrectAns);
     counter -= 10;
@@ -179,9 +175,9 @@ function saveScore(score) {
  * @return {undefined} This function does not return anything.
  */
 function endQuiz() {
+  clearInterval(timerInterval);
   console.log("Quiz Ended");
   questionContentEL.innerHTML = "";
-  clearInterval(timerInterval);
   const questionDiv = document.createElement("div");
   const showScore = document.createElement("span");
   showScore.setAttribute("style", "background-color:green; color:white;");
