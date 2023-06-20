@@ -100,6 +100,18 @@ function showQuestion(question) {
 } */
 
 /**
+ * Removes the given element after a specified delay.
+ *
+ * @param {Element} el - The element to remove.
+ * @param {number} delay - The delay (in milliseconds) before removing the element.
+ */
+function removeElAfterDelay(el, delay) {
+  setTimeout(() => {
+    el.remove();
+  }, delay);
+}
+
+/**
  * Handles the user's choice in a quiz question and logs the result.
  *
  * @param {Object} question - The question object containing the title, choices, and correct answer index.
@@ -114,6 +126,7 @@ function handleChoice(question, choiceIndex) {
     correctMsg.setAttribute("style", "background-color:green; color:white;");
     correctMsg.textContent = "Correct!";
     document.querySelector(".quizContent").appendChild(correctMsg);
+    removeElAfterDelay(correctMsg, 500);
   } else {
     console.log("incorrectAnswer");
     const incorrectAns = document.createElement("span");
@@ -122,6 +135,7 @@ function handleChoice(question, choiceIndex) {
     document.querySelector(".quizContent").appendChild(incorrectAns);
     counter -= 10;
     quizTimer.textContent = counter;
+    removeElAfterDelay(incorrectAns, 500);
   }
   const nextQuestionIndex = currentQuestionIndex + 1;
   if (nextQuestionIndex < data.length) {
