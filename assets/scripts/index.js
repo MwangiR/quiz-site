@@ -14,7 +14,8 @@ function startQuiz() {
   questionContentEL.innerHTML = "";
   const startButton = document.createElement("button");
   startButton.textContent = "Start";
-  startButton.setAttribute("style", "display:block; margin-bottom:10px;");
+  startButton.setAttribute("class", "startBtn");
+  //startButton.setAttribute("style", "display:block; margin-bottom:10px;");
   startButton.addEventListener("click", () => {
     loadQuestions();
     //testTimer();
@@ -194,7 +195,9 @@ function saveScore(score) {
 
 function showScore() {
   const restartBtn = document.createElement("button");
+  restartBtn.setAttribute("class", "restartBtn");
   const scoreSection = document.createElement("div");
+  scoreSection.setAttribute("class", "displayScore");
   const scoreLog = JSON.parse(localStorage.getItem("highScore"));
 
   const scoreTable = document.createElement("table");
