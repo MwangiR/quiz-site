@@ -10,6 +10,67 @@ let highScore = 0;
 console.log(questionContentEL);
 console.log(counter);
 
+/*--------------------------------------------------------------------*/
+/*Modal to show highscores */
+
+const modalDiv = document.createElement("div");
+modalDiv.setAttribute("class", "w3-modal");
+modalDiv.setAttribute("id", "id01");
+modalDiv.setAttribute("style", "display:none");
+
+const modalContent = document.createElement("div");
+modalContent.setAttribute("class", "w3-modal-content");
+
+const modalContainer = document.createElement("div");
+modalContainer.setAttribute("class", "w3-container");
+
+const modalSpan = document.createElement("span");
+modalSpan.setAttribute("class", "w3-button w3-display-topright");
+modalSpan.addEventListener("click", () => {
+  modalDiv.style.display = "none";
+});
+modalSpan.textContent = "X";
+
+/*modal table */
+
+const modalScoreTable = document.createElement("table");
+modalScoreTable.setAttribute("class", "scoreTable");
+modalScoreTable.setAttribute("style", "color:black;");
+const tableHeader = document.createElement("tr");
+const highscoreHeaders = ["Name", "Score"];
+highscoreHeaders.forEach((headerText) => {
+  const th = document.createElement("th");
+  th.textContent = headerText;
+  tableHeader.appendChild(th);
+});
+modalScoreTable.appendChild(tableHeader);
+
+const modalBtn = document.createElement("button");
+modalBtn.textContent = "Highscores";
+modalBtn.setAttribute("class", "w3-button w3-black");
+modalBtn.addEventListener("click", () => {
+  const scoreLog = JSON.parse(localStorage.getItem("highScore"));
+  scoreLog.forEach((score) => {
+    const tr = document.createElement("tr");
+    modalScoreTable.appendChild(tr);
+    tr.appendChild(document.createElement("td")).textContent = score.name;
+    tr.appendChild(document.createElement("td")).textContent = score.score;
+  });
+  modalContainer.innerHTML = "";
+  modalContainer.appendChild(modalScoreTable);
+  modalDiv.style.display = "block";
+});
+
+//append to dom
+
+modalContent.appendChild(modalSpan);
+modalContent.appendChild(modalContainer);
+modalDiv.appendChild(modalContent);
+document.body.appendChild(modalBtn);
+document.body.appendChild(modalDiv);
+
+/*--------------------------------------------------------------------*/
+
 function startQuiz() {
   questionContentEL.innerHTML = "";
   const startButton = document.createElement("button");
@@ -67,6 +128,7 @@ function showQuestion(question) {
     const choice = question.choices[index];
     const choiceButton = document.createElement("button");
     choiceButton.textContent = choice;
+    choiceButton.setAttribute("class", "choiceBtn");
     choiceButton.setAttribute("style", "display:block; margin-bottom:5px;");
     choiceButton.addEventListener("click", () => {
       if (index === question.correctAnswer) {
