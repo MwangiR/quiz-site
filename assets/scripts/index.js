@@ -1,10 +1,10 @@
-var questionContentEL = document.querySelector(".question-Container");
-var quizTimer = document.querySelector("#timerInterval");
+const questionContentEL = document.querySelector(".question-Container");
+const quizTimerEl = document.querySelector("#timerInterval");
 const headerEl = document.querySelector("header");
-var counter = quizTimer.textContent;
+let counter = quizTimerEl.textContent;
 let currentQuestionIndex = 0;
 let data;
-var timerInterval;
+let timerInterval;
 let highScore = 0;
 
 console.log(questionContentEL);
@@ -95,7 +95,7 @@ function startQuiz() {
         //clearInterval(timerInterval);
         endQuiz();
       } else {
-        quizTimer.textContent = counter;
+        quizTimerEl.textContent = counter;
       }
     }, 1000);
   });
@@ -135,17 +135,17 @@ function showQuestion(question) {
   questionContentEL.appendChild(questionDiv);
   for (let index = 0; index < question.choices.length; index++) {
     const choice = question.choices[index];
-    const choiceButton = document.createElement("button");
-    choiceButton.textContent = choice;
-    choiceButton.setAttribute("class", "choiceBtn");
-    choiceButton.setAttribute("style", "display:block; margin-bottom:5px;");
-    choiceButton.addEventListener("click", () => {
+    const choiceButtonEl = document.createElement("button");
+    choiceButtonEl.textContent = choice;
+    choiceButtonEl.setAttribute("class", "choiceBtn");
+    choiceButtonEl.setAttribute("style", "display:block; margin-bottom:5px;");
+    choiceButtonEl.addEventListener("click", () => {
       if (index === question.correctAnswer) {
         highScore++;
       }
       handleChoice(question, index);
     });
-    questionDiv.appendChild(choiceButton);
+    questionDiv.appendChild(choiceButtonEl);
   }
 }
 
@@ -208,7 +208,7 @@ function handleChoice(question, choiceIndex) {
     console.log(highScore);
     document.querySelector(".quizContent").appendChild(incorrectAns);
     counter -= 10;
-    quizTimer.textContent = counter;
+    quizTimerEl.textContent = counter;
     removeElAfterDelay(incorrectAns, 500);
   }
   const nextQuestionIndex = currentQuestionIndex + 1;
