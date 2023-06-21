@@ -74,6 +74,7 @@ td {
   vertical-align: middle;
 }
 
+.w3-container,
 .displayScore {
   display: flex;
   flex-direction: column;
@@ -115,8 +116,30 @@ input[type="text"] {
 }
 
 /*modal*/
+
+.modalCloseBtn {
+  border: none;
+  display: inline-block;
+  padding: 8px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: Verdana, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .w3-container {
-  padding: 0.01em 16px;
+  padding: 0.8em 16px;
 }
 
 .w3-display-topright {
@@ -126,6 +149,7 @@ input[type="text"] {
 }
 
 .w3-button {
+  width: 100%;
   border: none;
   display: inline-block;
   padding: 8px 16px;
@@ -152,6 +176,7 @@ input[type="text"] {
   background-color: #000 !important;
 }
 
+.modalCloseBtn:hover,
 .w3-button:hover {
   color: #000 !important;
   background-color: #ccc !important;

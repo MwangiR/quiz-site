@@ -13,6 +13,9 @@ console.log(counter);
 /*--------------------------------------------------------------------*/
 /*Modal to show highscores */
 
+const modalSection = document.createElement("section");
+headerEl.insertAdjacentElement("afterend", modalSection);
+
 const modalDiv = document.createElement("div");
 modalDiv.setAttribute("class", "w3-modal");
 modalDiv.setAttribute("id", "id01");
@@ -25,7 +28,7 @@ const modalContainer = document.createElement("div");
 modalContainer.setAttribute("class", "w3-container");
 
 const modalSpan = document.createElement("span");
-modalSpan.setAttribute("class", "w3-button w3-display-topright");
+modalSpan.setAttribute("class", "w3-display-topright modalCloseBtn");
 modalSpan.addEventListener("click", () => {
   modalDiv.style.display = "none";
 });
@@ -62,11 +65,10 @@ modalBtn.addEventListener("click", () => {
 });
 
 //append to dom
-
 modalContent.appendChild(modalSpan);
 modalContent.appendChild(modalContainer);
 modalDiv.appendChild(modalContent);
-document.body.appendChild(modalBtn);
+modalSection.appendChild(modalBtn);
 document.body.appendChild(modalDiv);
 
 /*--------------------------------------------------------------------*/
@@ -233,7 +235,8 @@ function saveScore(score) {
 
       validName.setAttribute("class", "validationInput");
       validName.textContent = "Please input valid name...";
-      headerEl.insertAdjacentElement("afterend", validName);
+      modalSection.insertAdjacentElement("afterend", validName);
+      removeElAfterDelay(validName, 5000);
     } else {
       let scores = JSON.parse(localStorage.getItem("highScore")) || [];
       scores.push({ name, score: score });
