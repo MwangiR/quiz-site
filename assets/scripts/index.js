@@ -72,7 +72,14 @@ modalSection.appendChild(modalBtn);
 document.body.appendChild(modalDiv);
 
 /*--------------------------------------------------------------------*/
+/* Modal Window Ends Here */
 
+/**
+ * Initializes the quiz by setting up the start button and its event listener.
+ * Clicking the button starts the quiz and begins the timer.
+ *
+ * @return {undefined} No return value.
+ */
 function startQuiz() {
   questionContentEL.innerHTML = "";
   const startButton = document.createElement("button");
@@ -220,7 +227,6 @@ function handleChoice(question, choiceIndex) {
  *
  * @param {number} score - the score to save
  */
-
 function saveScore(score) {
   const nameInput = document.createElement("input");
   nameInput.setAttribute("type", "text");
@@ -258,6 +264,12 @@ function saveScore(score) {
   questionContentEL.appendChild(scoreDiv);
 }
 
+/**
+ * Creates a score table with high scores and a button to restart the game.
+ * Retrieves high scores from local storage.
+ *
+ * @return {undefined} No return value.
+ */
 function showScore() {
   const restartBtn = document.createElement("button");
   restartBtn.setAttribute("class", "restartBtn");
