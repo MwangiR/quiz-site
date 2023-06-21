@@ -232,6 +232,7 @@ function saveScore(score) {
   nameInput.setAttribute("type", "text");
   nameInput.setAttribute("placeholder", "Enter your name");
   const saveBtn = document.createElement("button");
+  saveBtn.setAttribute("class", "saveBtn");
   saveBtn.textContent = "Save";
   saveBtn.addEventListener("click", () => {
     const name = nameInput.value;
