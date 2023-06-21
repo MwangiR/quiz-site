@@ -38,7 +38,7 @@ header a {
 
 .quizContent {
   background-color: var(--magentahaze);
-  padding: 10%;
+  padding: 5% 20%;
 }
 
 .validationInput {
@@ -81,6 +81,7 @@ td {
   align-items: center;
 }
 
+.saveBtn,
 .startBtn,
 .restartBtn {
   margin: 10px 0;
@@ -112,7 +113,16 @@ td {
 
 input[type="text"] {
   border: none;
-  border-bottom: 2px solid #041f1e;
+  border-bottom: 3px solid #041f1e;
+  padding: 10px 20px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+footer {
+  color: var(--darkgreen);
+  display: flex;
+  justify-content: center;
 }
 
 /*modal*/
