@@ -20,33 +20,33 @@
         "correctAnswer":2
     },
     {
-        "title":"What brand of laptop do I have?",
+        "title":"Which of the following is used to add an element to the end of an array in JavaScript?",
         "choices":[
-            "HP",
-            "Acer",
-            "Dell",
-            "Lenovo"
+            "Insert",
+            "Append",
+            "Push",
+            "Add"
         ],
-        "correctAnswer":0
+        "correctAnswer":2
     },
     {
-        "title":"How old am I?",
+        "title":"Which method is used to remove the last element from an array in JavaScript?",
         "choices":[
-            12,
-            20,
-            9,
-            16
+            "Remove",
+            "Pop",
+            "Delete",
+            "Extract"
         ],
-        "correctAnswer":3
+        "correctAnswer":1
     },
     {
         "title":"How old is Google?",
         "choices":[
-            12,
-            20,
-            18,
-            16
+            "12 years",
+            "20+ years",
+            "18 years",
+            "16 years"
         ],
-        "correctAnswer":2
+        "correctAnswer":1
     }
 ]
