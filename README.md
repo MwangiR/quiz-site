@@ -47,4 +47,4 @@ Contributions to this quiz app are welcome. If you find any issues or have sugge
 
 ## Screenshot
 
-![Quiz-Site](./assets/images/quiz.gif)
+![Quiz-Site](https://github.com/MwangiR/quiz-site/blob/main/assets/images/quiz.gif)
