@@ -1,9 +1,10 @@
-# quiz-site
+# QUIZ-SITE
+
 This is a JavaScript quiz app that allows users to test their knowledge by answering multiple-choice questions. The app includes a timer and keeps track of the user's score. It also provides a highscore feature to save and display the highest scores.
 
 ## Link
 
-[Quiz-Site]()
+[Quiz-Site](https://mwangir.github.io/quiz-site/)
 
 ## Getting Started
 
@@ -46,4 +47,4 @@ Contributions to this quiz app are welcome. If you find any issues or have sugge
 
 ## Screenshot
 
-![Quiz-Site]()
+![Quiz-Site](./assets/images/quiz.gif)
