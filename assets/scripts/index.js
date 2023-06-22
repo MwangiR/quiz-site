@@ -53,15 +53,23 @@ modalBtn.textContent = "Highscores";
 modalBtn.setAttribute("class", "w3-button w3-black");
 modalBtn.addEventListener("click", () => {
   const scoreLog = JSON.parse(localStorage.getItem("highScore"));
-  scoreLog.forEach((score) => {
-    const tr = document.createElement("tr");
-    modalScoreTable.appendChild(tr);
-    tr.appendChild(document.createElement("td")).textContent = score.name;
-    tr.appendChild(document.createElement("td")).textContent = score.score;
-  });
-  modalContainer.innerHTML = "";
-  modalContainer.appendChild(modalScoreTable);
-  modalDiv.style.display = "block";
+  if (scoreLog === null || scoreLog.length === 0) {
+    const noScoreMsg = document.createElement("section");
+    noScoreMsg.setAttribute("class", "validationInput");
+    noScoreMsg.textContent = "No Highscores Yet";
+    modalSection.insertAdjacentElement("afterend", noScoreMsg);
+    removeElAfterDelay(noScoreMsg, 3000);
+  } else {
+    scoreLog.forEach((score) => {
+      const tr = document.createElement("tr");
+      modalScoreTable.appendChild(tr);
+      tr.appendChild(document.createElement("td")).textContent = score.name;
+      tr.appendChild(document.createElement("td")).textContent = score.score;
+    });
+    modalContainer.innerHTML = "";
+    modalContainer.appendChild(modalScoreTable);
+    modalDiv.style.display = "block";
+  }
 });
 
 //append to dom
@@ -149,28 +157,6 @@ function showQuestion(question) {
   }
 }
 
-/* function loadQuestions() {
-  fetch("assets/json/questions.json")
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((question) => {
-        const questionDiv = document.createElement("div");
-        questionDiv.textContent = question.title;
-        questionContentEL.appendChild(questionDiv);
-        question.choices.forEach((choice, index) => {
-          const choiceButton = document.createElement("button");
-          choiceButton.setAttribute("style", "display:block; margin-bottom:5px;");
-          choiceButton.textContent = choice;
-          choiceButton.addEventListener("click", () => {
-            handleChoice(question, index);
-          });
-          questionDiv.appendChild(choiceButton);
-        });
-      });
-    })
-    .catch((error) => console.error(error));
-} */
-
 /**
  * Removes the alert message (correct or incorrect) after a specified delay.
  *
@@ -237,9 +223,7 @@ function saveScore(score) {
   saveBtn.addEventListener("click", () => {
     const name = nameInput.value;
     if (name === "") {
-      //alert("Please input valid name...");
       const validName = document.createElement("section");
-
       validName.setAttribute("class", "validationInput");
       validName.textContent = "Please input valid name...";
       modalSection.insertAdjacentElement("afterend", validName);
